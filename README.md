@@ -1,4 +1,4 @@
-# SENDA <img src="https://raw.githubusercontent.com/ebanalyse/SENDA/main/logo.png" align="right" height=250/>
+# SENDA <img src="logo.png" align="right" height=250/>
 
 ![Build status](https://github.com/ebanalyse/NERDA/workflows/build/badge.svg)
 [![codecov](https://codecov.io/gh/ebanalyse/NERDA/branch/main/graph/badge.svg?token=OB6LGFQZYX)](https://codecov.io/gh/ebanalyse/NERDA)
