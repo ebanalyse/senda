@@ -22,7 +22,7 @@ If you want the development version then install directly from [GitHub](https://
 
 We will fine-tune a transformer for detecting the polarity ('positive', 'neutral' or 'negative')
 of Danish Tweets. For training we use more than 5,000 Danish Tweets kindly annotated
-and hosted by the Alexandra Institute.
+and hosted by the [Alexandra Institute](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#twitter-sentiment) (thanks!).
 
 First, load sentiment analysis datasets.
 
@@ -85,9 +85,9 @@ m.predict(text, return_labels=True)
 ['positiv']
 ```
 
-### senda model available on Huggingface
+## `senda` model available on Huggingface
 
-The model above achieves an accuracy of 0.76 and a macro-averaged F1-score of 0.75 on a small test data set, that Alexandra Institute provides.
+As you see, the model above achieves an accuracy of 0.77 and a macro-averaged F1-score of 0.73 on a small test data set, that [Alexandra Institute](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#twitter-sentiment) provides.
 
 The model is published on [Huggingface](https://huggingface.co/larskjeldgaard/senda).
 
@@ -102,7 +102,10 @@ model = AutoModelForSequenceClassification.from_pretrained("larskjeldgaard/senda
 senda_pipeline = pipeline('sentiment-analysis', model=model, tokenizer=tokenizer)
 
 senda_pipeline("Sikke en dejlig dag det er i dag")
+[{'label': 'positiv', 'score': 0.7678486704826355}]
 ```
+
+The model can most certainly be improved, and we encourage all NLP-enthusiasts to try to train a better model - you can use the `senda` package to do this.
 
 ## Background
 `senda` is developed as a part of [Ekstra Bladet](https://ekstrabladet.dk/)’s activities on Platform Intelligence in News (PIN). PIN is an industrial research project that is carried out in collaboration between the [Technical University of Denmark](https://www.dtu.dk/), [University of Copenhagen](https://www.ku.dk/) and [Copenhagen Business School](https://www.cbs.dk/) with funding from [Innovation Fund Denmark](https://innovationsfonden.dk/). The project runs from 2020-2023 and develops recommender systems and natural language processing systems geared for news publishing, some of which are open sourced like `senda`.
