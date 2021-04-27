@@ -20,11 +20,11 @@ If you want the development version then install directly from [GitHub](https://
 
 ## How to use
 
-We will fine-tune a transformer for detecting the polarity ('positive', 'neutral' or 'negative')
+We will show how to use `senda` for fine-tuning a transformer for detecting the polarity ('positive', 'neutral' or 'negative')
 of Danish Tweets. For training we use more than 5,000 Danish Tweets kindly annotated
 and hosted by the [Alexandra Institute](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#twitter-sentiment) (thanks!).
 
-First, load sentiment analysis datasets.
+First, load Danish Tweets annotated with polarity.
 
 ```python
 from senda import get_danish_tweets
@@ -89,7 +89,7 @@ m.predict(text, return_labels=True)
 
 As you see, the model above achieves an accuracy of 0.77 and a macro-averaged F1-score of 0.73 on a small test data set, that [Alexandra Institute](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#twitter-sentiment) provides.
 
-The model is published on [Huggingface](https://huggingface.co/larskjeldgaard/senda).
+The model is published on [Huggingface](https://huggingface.co/pin/senda).
 
 Here is how to download and use the model with PyTorch:
 
@@ -106,6 +106,10 @@ senda_pipeline("Sikke en dejlig dag det er i dag")
 ```
 
 The model can most certainly be improved, and we encourage all NLP-enthusiasts to try to train a better model - you can use the `senda` package to do this.
+
+## `senda` scope
+
+`senda` is not limited to fine-tuning transformers for Danish sentiment analysis tasks. You can use `senda` for fine-tuning **any** transformer for **any** text classification task in **any** language.
 
 ## Background
 `senda` is developed as a part of [Ekstra Bladet](https://ekstrabladet.dk/)’s activities on Platform Intelligence in News (PIN). PIN is an industrial research project that is carried out in collaboration between the [Technical University of Denmark](https://www.dtu.dk/), [University of Copenhagen](https://www.ku.dk/) and [Copenhagen Business School](https://www.cbs.dk/) with funding from [Innovation Fund Denmark](https://innovationsfonden.dk/). The project runs from 2020-2023 and develops recommender systems and natural language processing systems geared for news publishing, some of which are open sourced like `senda`.
