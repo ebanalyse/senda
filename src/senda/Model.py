@@ -182,7 +182,7 @@ class Model:
             labels (str, optional): Labels for text classification task. Defaults to ['negativ', 'neutral', 'positiv'].
             tokenize_args (dict, optional): Args for tokenization. Defaults to {'padding':True, 'truncation':True, 'max_length':512}.
             training_args (dict, optional): Training Arguments. Defaults to {"output_dir":'./results',          # output directory "num_train_epochs": 4,              # total # of training epochs "per_device_train_batch_size":8,  # batch size per device during training "evaluation_strategy":"steps", "eval_steps":100, "logging_steps":100, "learning_rate":2e-05, "weight_decay": 0.01, "per_device_eval_batch_size":32,   # batch size for evaluation "warmup_steps":100,                # number of warmup steps for learning rate scheduler "seed":42, "load_best_model_at_end":True, }.
-            trainer_args (dict, optional): Arguments for Trainer. Defaults to {'compute_metrics': compute_metrics, 'callbacks':[EarlyStoppingCallback(early_stopping_patience=4)], }.
+            trainer_args (dict, optional): Optional arguments for Trainer. Defaults to {'compute_metrics': compute_metrics, 'callbacks':[EarlyStoppingCallback(early_stopping_patience=4)], }.
             train_dataset (pd.DataFrame, optional): Training Dataset. The dataset must contain columns 'text' and 'label'. Defaults to None.
             eval_dataset (pd.DataFrame, optional): Evaluation Dataset. The dataset must contain columns 'text' and 'label'. Defaults to None.
             strip_urls (bool, optional): Strip texts for URLs as part of the preprocessing. Defaults to True.

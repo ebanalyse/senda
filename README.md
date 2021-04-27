@@ -4,7 +4,7 @@
 ![PyPI](https://img.shields.io/pypi/v/senda.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-`senda` is a python package for fine-tuning transformers for 
+`senda` is a small python package for fine-tuning transformers for 
 sentiment analysis (and text classification in general).
 
 `senda` builds on the excellent `transformers.Trainer` API.
