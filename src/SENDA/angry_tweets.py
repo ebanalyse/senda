@@ -56,6 +56,7 @@ def download_angrytweets() -> str:
     return download_unzip(url_zip = 'http://danlp-downloads.alexandra.dk/datasets/game_tweets.zip',
                           dir_extract = dir)
 
+#### ... a lot of copy pasta from 'danlp' follows ####
 def _lookup_tweets(tweet_ids, api):
     import tweepy
     full_tweets = []
@@ -142,6 +143,8 @@ def get_angrytweets(force: bool = False) -> dict:
     resulting_df.to_csv(dataset_path, index=False)
     
     print("Downloaded {} out of {} tweets".format(len(full_t), len(twitter_ids)))
+
+    return resulting_df
 
 
 

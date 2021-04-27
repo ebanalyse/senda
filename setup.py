@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="SENDA", 
-    version="0.7.0",
+    version="0.7.1",
     author="Lars Kjeldgaard",
     author_email="lars.kjeldgaard@eb.dk",
     description="Framework for Fine-tuning Transformers for Sentiment Analysis",
