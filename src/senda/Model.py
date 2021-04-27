@@ -173,6 +173,7 @@ class Model:
         for idx, label in enumerate(labels):
             label2id[label] = idx
         self.label2id = label2id  
+        self.labels = labels
 
         # initialize model.
         self.model = AutoModelForSequenceClassification.from_pretrained(transformer, 
