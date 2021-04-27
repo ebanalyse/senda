@@ -32,8 +32,8 @@ def get_danish_tweets(frac: float = 0.8,
     Gets Danish Tweets annotated kindly annotated and
     hosted by [Alexandra Institute](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#twitter-sentiment).
     Remember to set up your Twitter Dev login according
-    to instructions for danlp.datasets.TwitterSent() in 
-    order to download tweets. 
+    to instructions for danlp.datasets.TwitterSent() and
+    danlp.datasets.AngryTweets() in order to download tweets. 
 
     Args:
         frac (float, optional): Fraction of data to be sampled
@@ -112,7 +112,7 @@ def strip_urls(x: str):
     return re.sub(r'^https?:\/\/.*[\r\n]*', '', x, flags=re.MULTILINE)
 
 class Model:
-    """SENDA Text Classification Model
+    """senda Text Classification Model
     
     A model for Text Classification, e.g. for Sentiment
     Analysis. The model is set up using the `transformers.Trainer`
@@ -150,7 +150,7 @@ class Model:
                 train_dataset: pd.DataFrame = None,
                 eval_dataset: pd.DataFrame = None,
                 strip_urls: bool = True) -> None:
-        """Initiate SENDA Text Classification Model
+        """Initiate senda Text Classification Model
 
         Args:
             transformer (str, optional): Pretrained transformer. Defaults to "Maltehb/danish-bert-botxo".

@@ -4,14 +4,14 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="SENDA", 
-    version="0.7.1",
+    name="senda", 
+    version="0.7.2",
     author="Lars Kjeldgaard",
     author_email="lars.kjeldgaard@eb.dk",
     description="Framework for Fine-tuning Transformers for Sentiment Analysis",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/ebanalyse/SENDA",
+    url="https://github.com/ebanalyse/senda",
     packages=setuptools.find_packages(where='src'),
     package_dir={'': 'src'},
     python_requires='>=3.7',

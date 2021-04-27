@@ -1,4 +1,4 @@
-# SENDA <img src="logo.png" align="right" height=250/>
+# senda <img src="logo.png" align="right" height=250/>
 
 ![Build status](https://github.com/ebanalyse/NERDA/workflows/build/badge.svg)
 [![codecov](https://codecov.io/gh/ebanalyse/NERDA/branch/main/graph/badge.svg?token=OB6LGFQZYX)](https://codecov.io/gh/ebanalyse/NERDA)
@@ -6,19 +6,19 @@
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/NERDA?color=green)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-`SENDA` is a python package for fine-tuning transformers for 
+`senda` is a python package for fine-tuning transformers for 
 sentiment analysis (and text classification in general).
 
-`SENDA` builds on the excellent `transformers.Trainer` API.
+`senda` builds on the excellent `transformers.Trainer` API.
 
 ## Installation guide
-`SENDA` can be installed from [PyPI](https://pypi.org/project/SENDA/) with 
+`senda` can be installed from [PyPI](https://pypi.org/project/senda/) with 
 
 ```
-pip install SENDA
+pip install senda
 ```
 
-If you want the development version then install directly from [GitHub](https://github.com/ebanalyse/SENDA).
+If you want the development version then install directly from [GitHub](https://github.com/ebanalyse/senda).
 
 ## How to use
 
@@ -29,7 +29,7 @@ and hosted by the Alexandra Institute.
 First, load the datasets, we want to use for fine-tuning our sentiment analysis model.
 
 ```python
-from SENDA import get_danish_tweets
+from senda import get_danish_tweets
 df_train, df_eval, df_test = get_danish_tweets()
 ```
 Note, that the datasets must be DataFrames containing the columns 'text' and 'label'.
@@ -37,7 +37,7 @@ Note, that the datasets must be DataFrames containing the columns 'text' and 'la
 Next, instantiate the model and set up the model.
 
 ```python
-from SENDA import Model
+from senda import Model
 m = Model(train_dataset = df_train, 
           eval_dataset = df_eval,
           transformer = "Maltehb/danish-bert-botxo",
@@ -82,7 +82,7 @@ text = "Sikke en dejlig dag det er i dag"
 m.predict(text, return_labels=True)
 ```
 
-### SENDA model available on Huggingface
+### senda model available on Huggingface
 
 The model above achieves an accuracy of 0.76 and a macro-averaged F1-score of 0.75 on a small test data set, that Alexandra Institute provides.
 
@@ -102,16 +102,16 @@ senda_pipeline("Sikke en dejlig dag det er i dag")
 ```
 
 ## Background
-`SENDA` is developed as a part of [Ekstra Bladet](https://ekstrabladet.dk/)’s activities on Platform Intelligence in News (PIN). PIN is an industrial research project that is carried out in collaboration between the [Technical University of Denmark](https://www.dtu.dk/), [University of Copenhagen](https://www.ku.dk/) and [Copenhagen Business School](https://www.cbs.dk/) with funding from [Innovation Fund Denmark](https://innovationsfonden.dk/). The project runs from 2020-2023 and develops recommender systems and natural language processing systems geared for news publishing, some of which are open sourced like `SENDA`.
+`senda` is developed as a part of [Ekstra Bladet](https://ekstrabladet.dk/)’s activities on Platform Intelligence in News (PIN). PIN is an industrial research project that is carried out in collaboration between the [Technical University of Denmark](https://www.dtu.dk/), [University of Copenhagen](https://www.ku.dk/) and [Copenhagen Business School](https://www.cbs.dk/) with funding from [Innovation Fund Denmark](https://innovationsfonden.dk/). The project runs from 2020-2023 and develops recommender systems and natural language processing systems geared for news publishing, some of which are open sourced like `senda`.
 
 ## Contact
-We hope, that you will find `SENDA` useful.
+We hope, that you will find `senda` useful.
 
 Please direct any questions and feedbacks to
 [us](mailto:lars.kjeldgaard@eb.dk)!
 
 If you want to contribute (which we encourage you to), open a
-[PR](https://github.com/ebanalyse/SENDA/pulls).
+[PR](https://github.com/ebanalyse/senda/pulls).
 
 If you encounter a bug or want to suggest an enhancement, please 
-[open an issue](https://github.com/ebanalyse/SENDA/issues).
+[open an issue](https://github.com/ebanalyse/senda/issues).
