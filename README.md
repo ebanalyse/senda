@@ -41,16 +41,16 @@ m = Model(train_dataset = df_train,
           transformer = "Maltehb/danish-bert-botxo",
           labels = ['negativ', 'neutral', 'positiv'],
           tokenize_args = {'padding':True, 'truncation':True, 'max_length':512},
-          training_args = {"output_dir":'./results',          # output directory
-                           "num_train_epochs": 4,              # total # of training epochs
-                           "per_device_train_batch_size":8,  # batch size per device during training
+          training_args = {"output_dir":'./results',          
+                           "num_train_epochs": 4,             
+                           "per_device_train_batch_size":8,   
                            "evaluation_strategy":"steps",
                            "eval_steps":100,
                            "logging_steps":100,
                            "learning_rate":2e-05,
                            "weight_decay": 0.01,
-                           "per_device_eval_batch_size":32,   # batch size for evaluation
-                           "warmup_steps":100,                # number of warmup steps for learning rate scheduler
+                           "per_device_eval_batch_size":32,   
+                           "warmup_steps":100,                
                            "seed":42,
                            "load_best_model_at_end":True,
                            })
@@ -105,7 +105,7 @@ senda_pipeline("Sikke en dejlig dag det er i dag")
 [{'label': 'positiv', 'score': 0.7678486704826355}]
 ```
 
-The model can most certainly be improved, and we encourage all NLP-enthusiasts to try to train a better model - you can use the `senda` package to do this.
+The model can most certainly be improved, and we encourage all NLP-enthusiasts to try and train a better model - you can use the `senda` package to do this.
 
 ## `senda` scope
 
