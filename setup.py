@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="senda", 
-    version="0.7.3",
+    version="0.7.4",
     author="Lars Kjeldgaard",
     author_email="lars.kjeldgaard@eb.dk",
     description="Framework for Fine-tuning Transformers for Sentiment Analysis",
@@ -27,9 +27,6 @@ setuptools.setup(
         'datasets',
         'numpy'
     ],
-    setup_requires=['pytest-runner'],
-    tests_require=['pytest',
-                   'pytest-cov'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

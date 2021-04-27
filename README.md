@@ -1,9 +1,7 @@
 # senda <img src="logo.png" align="right" height=250/>
 
-![Build status](https://github.com/ebanalyse/NERDA/workflows/build/badge.svg)
-[![codecov](https://codecov.io/gh/ebanalyse/NERDA/branch/main/graph/badge.svg?token=OB6LGFQZYX)](https://codecov.io/gh/ebanalyse/NERDA)
-![PyPI](https://img.shields.io/pypi/v/NERDA.svg)
-![PyPI - Downloads](https://img.shields.io/pypi/dm/NERDA?color=green)
+![Build status](https://github.com/ebanalyse/senda/workflows/build/badge.svg)
+![PyPI](https://img.shields.io/pypi/v/senda.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 `senda` is a python package for fine-tuning transformers for 
@@ -26,7 +24,7 @@ We will fine-tune a transformer for detecting the polarity ('positive', 'neutral
 of Danish Tweets. For training we use more than 5,000 Danish Tweets kindly annotated
 and hosted by the Alexandra Institute.
 
-First, load the datasets, we want to use for fine-tuning our sentiment analysis model.
+First, load sentiment analysis datasets.
 
 ```python
 from senda import get_danish_tweets
@@ -72,6 +70,7 @@ The model can then be evaluated on the test set:
 
 ```python
 m.evaluate(df_test)
+{'eval_loss': 0.5771588683128357, 'eval_accuracy': 0.7664399092970522, 'eval_f1': 0.7290485787279956, 'eval_runtime': 4.2016, 'eval_samples_per_second': 104.959}
 ```
 
 Predict new observations:
@@ -79,7 +78,11 @@ Predict new observations:
 ```python
 text = "Sikke en dejlig dag det er i dag"
 # in English: 'What a lovely day'
+m.predict(text)
+PredictionOutput(predictions=array([[-1.2986785 , -0.31318122,  1.2002046 ]], dtype=float32), label_ids=array([0]), metrics={'test_loss': 2.7630457878112793, 'test_accuracy': 0.0, 'test_f1': 0.0, 'test_runtime': 0.07, 'test_samples_per_second': 14.281})
+
 m.predict(text, return_labels=True)
+['positiv']
 ```
 
 ### senda model available on Huggingface

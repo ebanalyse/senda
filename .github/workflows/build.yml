@@ -45,18 +45,7 @@ jobs:
       with:
         name: lint-results
         path: flake-report/
-
-    - name: Run tests
-      run: |
-        python setup.py test
-
-    - name: Publish test results
-      uses: EnricoMi/publish-unit-test-result-action@v1.6
-      if: always()
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        files: test-results/**/*.xml
-        
+       
     - name: Build and publish to TEST PyPI
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}

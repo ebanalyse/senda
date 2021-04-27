@@ -122,6 +122,31 @@ class Model:
     new observations can be predicted with `predict` and
     the model can be evaluated with `evaluate`.
 
+    Examples:
+        Fine-tune Danish BERT for detecting polarity of Danish Tweets
+        >>> from senda import Model, get_danish_tweets
+        >>> df_train, df_eval, df_test = get_danish_tweets()
+        >>> m = Model(train_dataset = df_train, 
+                      eval_dataset = df_eval,
+                      transformer = "Maltehb/danish-bert-botxo",
+                      labels = ['negativ', 'neutral', 'positiv'],
+                      tokenize_args = {'padding':True, 'truncation':True, 'max_length':512},
+                      training_args = {"output_dir":'./results',          # output directory
+                           "num_train_epochs": 4,              # total # of training epochs
+                           "per_device_train_batch_size":8,  # batch size per device during training
+                           "evaluation_strategy":"steps",
+                           "eval_steps":100,
+                           "logging_steps":100,
+                           "learning_rate":2e-05,
+                           "weight_decay": 0.01,
+                           "per_device_eval_batch_size":32,   # batch size for evaluation
+                           "warmup_steps":100,                # number of warmup steps for learning rate scheduler
+                           "seed":42,
+                           "load_best_model_at_end":True,
+                           })
+        >>> m.init()
+        >>> m.train()
+
     Attributes:
         Trainer: Text Classification Trainer initialized with
             the init() method.
