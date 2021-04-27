@@ -95,8 +95,8 @@ Here is how to download and use the model with PyTorch:
 
 ```python
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipeline
-tokenizer = AutoTokenizer.from_pretrained("larskjeldgaard/senda")
-model = AutoModelForSequenceClassification.from_pretrained("larskjeldgaard/senda")
+tokenizer = AutoTokenizer.from_pretrained("pin/senda")
+model = AutoModelForSequenceClassification.from_pretrained("pin/senda")
 
 # create 'senda' sentiment analysis pipeline 
 senda_pipeline = pipeline('sentiment-analysis', model=model, tokenizer=tokenizer)
