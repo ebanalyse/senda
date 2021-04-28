@@ -153,3 +153,4 @@ runs/
 .envrc
 
 snoop.py
+results/

@@ -286,7 +286,7 @@ class Model:
             data = [data]
 
         if isinstance(data, list):
-            data = {'text': data, 'label': self.labels[0]*len(data)}
+            data = {'text': data, 'label': [self.labels[0]]*len(data)}
             data = pd.DataFrame(data)
 
         dataset = self.preprocess_data(data)
