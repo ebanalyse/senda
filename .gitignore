@@ -154,3 +154,5 @@ runs/
 
 snoop.py
 results/
+
+*.png
