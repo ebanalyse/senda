@@ -30,12 +30,30 @@ First, load Danish Tweets annotated with polarity.
 from senda import get_danish_tweets
 df_train, df_eval, df_test = get_danish_tweets()
 ```
-Note, that the datasets must be DataFrames containing the columns 'text' and 'label'.
+Note, that the datasets must be DataFrames containing the columns 'text' and 'label', e.g.
+
+```python
+df_train
+                                             text    label
+Cepos: Vi bør diskutere, hvordan vi afvikler j...  neutral
+Avis: FC København og Brøndby IF i duel om Ste...  neutral
+@PeterThorup @IntactDenmark Nej - endnu ikke -...  positiv
+That was pretty close. Theresa May fortsætter ...  neutral
+Så er der ny Facebook-side til min nye forretn...  positiv
+                                              ...      ...
+@MtnTeit @aeldresagen Helt enig. Vi må bare ik...  negativ
+@PrmMortensen @Marchen_Neel @larsloekke @oeste...  negativ
+Hvordan sikrer vi ØKONOMISK RENTABLE REGIONALE...  neutral
+@JanEJoergensen @24syv @DanskDf1995 @Spolitik ...  negativ
+@Fonoudi6eren Ikke enig! Synes vi var godt med...  positiv
+```
 
 Next, instantiate the model and set up the model.
 
 ```python
-from senda import Model
+from senda import Model, compute_metrics
+from transformers import EarlyStoppingCallback
+
 m = Model(train_dataset = df_train, 
           eval_dataset = df_eval,
           transformer = "Maltehb/danish-bert-botxo",
@@ -53,11 +71,14 @@ m = Model(train_dataset = df_train,
                            "warmup_steps":100,                
                            "seed":42,
                            "load_best_model_at_end":True,
-                           })
+                           },
+           trainer_args = {'compute_metrics': compute_metrics,
+                           'callbacks':[EarlyStoppingCallback(early_stopping_patience=4)],
+                           }
+           )
 ```
 
-Now, all there is left is to initialize a `transformers.Trainer` and 
-train the model:
+Now, all there is left is to initialize the model (including the `transformers.Trainer`) and train it:
 
 ```python
 # initialize Trainer
