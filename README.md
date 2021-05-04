@@ -5,9 +5,9 @@
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 `senda` is a small python package for fine-tuning transformers for 
-sentiment analysis (and text classification in general).
+text classification tasks.
 
-`senda` builds on the excellent `transformers.Trainer` API.
+`senda` builds on the excellent `transformers.Trainer` API (all credit goes to the `Huggingface` team).
 
 ## Installation guide
 `senda` can be installed from [PyPI](https://pypi.org/project/senda/) with 
@@ -48,7 +48,7 @@ Hvordan sikrer vi ØKONOMISK RENTABLE REGIONALE...  neutral
 @Fonoudi6eren Ikke enig! Synes vi var godt med...  positiv
 ```
 
-Next, instantiate the model and set up the model.
+Next, instantiate and set up the model.
 
 ```python
 from senda import Model, compute_metrics
@@ -127,10 +127,6 @@ senda_pipeline("Sikke en dejlig dag det er i dag")
 ```
 
 The model can most certainly be improved, and we encourage all NLP-enthusiasts to try and train a better model - you can use the `senda` package to do this.
-
-## `senda` scope
-
-`senda` is not limited to fine-tuning transformers for Danish sentiment analysis tasks. You can use `senda` for fine-tuning **any** transformer for **any** text classification task in **any** language.
 
 ## Background
 `senda` is developed as a part of [Ekstra Bladet](https://ekstrabladet.dk/)’s activities on Platform Intelligence in News (PIN). PIN is an industrial research project that is carried out in collaboration between the [Technical University of Denmark](https://www.dtu.dk/), [University of Copenhagen](https://www.ku.dk/) and [Copenhagen Business School](https://www.cbs.dk/) with funding from [Innovation Fund Denmark](https://innovationsfonden.dk/). The project runs from 2020-2023 and develops recommender systems and natural language processing systems geared for news publishing, some of which are open sourced like `senda`.
