@@ -1,3 +1,3 @@
-# senda 0.7.5
+# senda 0.7.6
 
 * First official release.

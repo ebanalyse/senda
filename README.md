@@ -5,7 +5,7 @@
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 `senda` is a small python package for fine-tuning transformers for 
-text classification tasks.
+sentiment analysis (and text classification tasks in general).
 
 `senda` builds on the excellent `transformers.Trainer` API (all credit goes to the `Huggingface` team).
 
@@ -20,7 +20,9 @@ If you want the development version then install directly from [GitHub](https://
 
 ## How to use
 
-We will show how to use `senda` for fine-tuning a transformer for detecting the polarity ('positive', 'neutral' or 'negative')
+You can use `senda` to fine-tune **any** transformer for **any** text classification task in **any** language.
+
+Here we will go through how to use `senda` for fine-tuning a transformer for detecting the polarity ('positive', 'neutral' or 'negative')
 of Danish Tweets. For training we use more than 5,000 Danish Tweets kindly annotated
 and hosted by the [Alexandra Institute](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#twitter-sentiment) (thanks!).
 
@@ -126,10 +128,13 @@ senda_pipeline("Sikke en dejlig dag det er i dag")
 [{'label': 'positiv', 'score': 0.7678486704826355}]
 ```
 
-The model can most certainly be improved, and we encourage all NLP-enthusiasts to try and train a better model - you can use the `senda` package to do this.
+The model can most certainly be improved, and we encourage all NLP-enthusiasts to train a better model - you can use the `senda` package to do this.
 
 ## Background
 `senda` is developed as a part of [Ekstra Bladet](https://ekstrabladet.dk/)’s activities on Platform Intelligence in News (PIN). PIN is an industrial research project that is carried out in collaboration between the [Technical University of Denmark](https://www.dtu.dk/), [University of Copenhagen](https://www.ku.dk/) and [Copenhagen Business School](https://www.cbs.dk/) with funding from [Innovation Fund Denmark](https://innovationsfonden.dk/). The project runs from 2020-2023 and develops recommender systems and natural language processing systems geared for news publishing, some of which are open sourced like `senda`.
+
+## Shout-outs
+- Thanks to [Alexandra Institute](https://alexandra.dk/) for doing all of the heavy lifting by annotating [Danish tweets]((https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#twitter-sentiment)) (and publishing them).
 
 ## Contact
 We hope, that you will find `senda` useful.
