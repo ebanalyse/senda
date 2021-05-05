@@ -1,4 +1,4 @@
-# senda <img src="logo.png" align="right" height=250/>
+# senda <img src="sendalogo.png" align="right" height=250/>
 
 ![Build status](https://github.com/ebanalyse/senda/workflows/build/badge.svg)
 ![PyPI](https://img.shields.io/pypi/v/senda.svg)
