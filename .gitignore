@@ -152,6 +152,8 @@ runs/
 # environment variables
 .envrc
 
+Alle_analytical.png
+
 snoop.py
 results/
 Analytical/
