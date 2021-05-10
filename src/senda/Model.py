@@ -73,6 +73,40 @@ def get_danish_tweets(frac: float = 0.8,
 
     return train, eval, test
 
+def get_danish_analytical_data() -> Tuple[pd.DataFrame, pd.DataFrame]:
+    """Get Danish Texts Annotated With Analytical
+
+    Gets Danish Tweets and Europarl Sentiment 2 kindly annotated and
+    hosted by [Alexandra Institute](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#twitter-sentiment).
+    Remember to set up your Twitter Dev login according
+    to instructions for danlp.datasets.TwitterSent()
+    in order to download tweets. 
+
+    Returns:
+        Tuple[pd.DataFrame, pd.DataFrame]: train
+            and test splits.
+    """
+
+    # load 'danlp' TwitterSent tweets.
+    test, model_data = TwitterSent().load_with_pandas()
+    model_data = [model_data[['text', 'sub/obj']].rename(columns={'sub/obj': 'label'})]
+    test = test[['text', 'sub/obj']].rename(columns={'sub/obj': 'label'})
+
+    # load 'danlp' Europarl Sentiment 2.
+    from danlp.datasets import EuroparlSentiment2
+    eurosent = EuroparlSentiment2()
+    eurosent = eurosent.load_with_pandas()
+    eurosent = eurosent[['text', 'sub/obj']].rename(columns={'sub/obj': 'label'})
+    model_data.append(eurosent)
+
+    # combine data.
+    train = pd.concat(model_data)
+    
+    # make sure index is OK.
+    train = train.reset_index()
+
+    return train, test
+
 class TextClassificationDataset(torch.utils.data.Dataset):
     """Torch Text Classification Dataset"""
     def __init__(self, encodings, labels=None):
@@ -308,5 +342,39 @@ class Model:
         self.Trainer.save_model(dir)
         self.tokenizer.save_pretrained(dir)
         print("Model saved.")
+
+class ModelAnalytical(Model):
+    # Model for Detecting 'Analytical' of Danish Texts
+    def __init__(self,
+                 train_dataset = None,
+                 eval_dataset = None,
+                 transformer = "Maltehb/danish-bert-botxo",
+                 labels = ['subjektivt', 'objektivt'],
+                 tokenize_args = {'padding':True, 'truncation':True, 'max_length':512},
+                 training_args = {"output_dir":'./results',          # output directory
+                                  "num_train_epochs": 4,              # total # of training epochs
+                                  "per_device_train_batch_size":8,  # batch size per device during training
+                                  "evaluation_strategy":"steps",
+                                  "eval_steps":100,
+                                  "logging_steps":100,
+                                  "learning_rate":1e-05,
+                                  "weight_decay": 0.01,
+                                  "per_device_eval_batch_size":32,   # batch size for evaluation
+                                  "warmup_steps":100,                # number of warmup steps for learning rate scheduler
+                                  "seed":42,
+                                  "load_best_model_at_end":True,
+                                  },
+                trainer_args = {'compute_metrics': compute_metrics,
+                              'callbacks':[EarlyStoppingCallback(early_stopping_patience=3)],
+                              },
+                strip_urls = True):
+                    super().__init__(train_dataset=train_dataset,
+                                     eval_dataset=eval_dataset,
+                                     transformer=transformer,
+                                     labels=labels,
+                                     tokenize_args=tokenize_args,
+                                     training_args=training_args,
+                                     trainer_args=trainer_args,
+                                     strip_urls=strip_urls)
 
 
