@@ -16,7 +16,7 @@ def convert_native_python(x):
     return getattr(x, "tolist", lambda: x)()
 
 # function to compute aggregated sentiment scores on article level.
-def predict_article(text):
+def predict_article(text, verbose = False):
 
     sents = sent_tokenize(text)
     data = {'text': sents, 'label': [m.labels[0]]*len(sents)}
@@ -26,24 +26,32 @@ def predict_article(text):
     
     # compute predicted labels.
     preds = np.argmax(preds, -1)
+
+    def map_pred(x):
+        if x == 0:
+            out = "subjektivt"
+        else:
+            out = "objektivt"
+        return out
+
+    if verbose:
+        preds_labels = [map_pred(pred) for pred in preds]
+        print("\n".join(["{}\n{}".format(sent,pred) for sent,pred in zip(sents,preds_labels)]))
     
     #### MEAN SENTIMENT SCORE####
     # compute mean sentiment "score" across sentences.
     mean = convert_native_python(preds.mean())
     
     # compute article label
-    #if mean > 0.1:
-    #    label_article = "positiv"
-    #elif mean < -0.15:
-    #    label_article = "negativ"
-    #else:
-    #    label_article = "neutral"
+    if mean < 0.25:
+        label_article = "subjektivt"
+    elif mean < 0.75:
+        label_article = "blandet"
+    else:
+        label_article = "objektivt"
 
     # compute header label
-    if preds[0] == 0:
-        label_header = "subjektivt"
-    else:
-        label_header = "objektivt"
+    label_header = map_pred(preds[0]) 
      
     #### Ratio between positive and negative sentences ####
     count_sub = sum(preds == 0)
@@ -53,48 +61,52 @@ def predict_article(text):
     ratio_sub_obj = (count_sub + 1) / (count_obj + 1)
     ratio_sub_obj = convert_native_python(ratio_sub_obj)
 
-    return {#'label_article': [label_article],
+    return {'label_article': [label_article],
             'label_header': [label_header],
             'mean': [mean], 
-            'ratio_pos_neg': [ratio_sub_obj],
+            'ratio_sub_obj': [ratio_sub_obj],
             # 'ratio_loaded': [(count_pos+count_neg)/len(sents)],
             'n_subj': [count_sub],
             'n_obj': [count_obj],
             #'n_neutral': [count_neutral]
             }
 
-def compute_statistics(section = "Sport", n=500):
+def compute_statistics(section = "Sport", n=500, read_from_file=False):
 
-    if section == "Alle":
-        section_select = None
-    else:
-        section_select = section
+    print(section)
+    if not read_from_file:
+        if section == "Alle":
+            section_select = None
+        else:
+            section_select = section
 
-    from ebpaperboy.news import get_news
-    newspaper = get_news(publication = "ekstrabladet",
-                         n_limit = n,
-                         order_by = "first_published",
-                         section_name = section_select)
-    import time
-
-    start = time.time()
-    preds = []
-    for i, x in enumerate(newspaper.news):
-        try:
-            x = newspaper.news[i].get_clean()
-            res = predict_article(x)
-            res = pd.DataFrame.from_dict(res)
-            preds.append(res)
-        except: 
-            pass
+        from ebpaperboy.news import get_news
+        print("Load data")
+        newspaper = get_news(publication = "ekstrabladet",
+                             n_limit = n,
+                             order_by = "first_published",
+                             section_name = section_select)
+        import time
+        print("Compute Predictions")
+        start = time.time()
+        preds = []
+        for i, x in enumerate(newspaper.news):
+            try:
+                x = newspaper.news[i].get_clean()
+                res = predict_article(x)
+                res = pd.DataFrame.from_dict(res)
+                preds.append(res)
+            except: 
+                pass
     # results = [sent(x) for x in newspaper.news]
-    end = time.time()
-    print(end - start)
-    preds = pd.concat(preds)
-    preds.to_csv(f'{section}.csv', index = False)
-
-    # preds = pd.read_csv("....csv")
-    out = sns.histplot(data=preds, x="mean", kde = True, bins = 30)
+        end = time.time()
+        print(end - start)
+        preds = pd.concat(preds)
+        preds.to_csv(f'{section}_analytical.csv', index = False)
+    else:
+        preds = pd.read_csv(f'{section}_analytical.csv')
+    
+    out = sns.histplot(data=preds, x="mean", kde = True, bins = 20)
     out.set(title=f'Sektion: {section}',xlabel='Analytical(mean)', ylabel='Count')
     out.get_figure().savefig(f'{section}_analytical.png')
     out.get_figure().clf()
@@ -105,8 +117,8 @@ def compute_statistics(section = "Sport", n=500):
     from scipy.stats import kurtosis, skew
     import numpy as np
     import math
-    percentiles = np.percentile(var, [0,10,20,30,40,50,60,70,80,90,100]).tolist()
-    percentiles = [round(x, 2) for x in percentiles]
+    #percentiles = np.percentile(var, [0,10,20,30,40,50,60,70,80,90,100]).tolist()
+    #percentiles = [round(x, 2) for x in percentiles]
     statistics = {
         "Section": section,
         "Mean": [round(np.mean(var), 2)],
@@ -114,16 +126,14 @@ def compute_statistics(section = "Sport", n=500):
         "Standard Deviation": [round(np.std(var), 2)],
         "Skewness": [round(skew(var), 2)],
         "Kurtosis": [round(kurtosis(var), 2)],
-        "Deciles": percentiles
+        # "Deciles": percentiles
     }
-    return statistics
+    return pd.DataFrame.from_dict(statistics)
 
-out = compute_statistics("Alle", n = 10000)
+# out = compute_statistics("Alle", n = 10000)
 
-    pd.DataFrame.from_dict(statistics, orient = "index")
-
-    sections = ["Erhverv",
-                "Danske kendte",
+sections = ["Erhverv",
+            "Danske kendte",
                 "Videnskab",
                 "Politik",
                 "Danske kongelige",
@@ -135,3 +145,33 @@ out = compute_statistics("Alle", n = 10000)
                 "Krimi",
                 "112",
                 "Teknologi"]
+
+all_stats = [compute_statistics(x, n = 500, read_from_file = False) for x in sections]
+
+stats_out = pd.concat(all_stats)
+
+#### ARTICLES - QUALITATIVE
+content_ids = [4731295,
+               8472237,
+               8469124,
+               8467323,
+               8474245,
+               8474345,
+               8471560,
+               8473645,
+               8474588]
+
+from ebpaperboy.news import get_news
+
+newspaper = get_news(publication = "ekstrabladet",
+                             n_limit = 50,
+                             order_by = "first_published",
+                             content_id = content_ids)
+
+for i, x in enumerate(newspaper.news):
+            try:
+                x = newspaper.news[i].get_clean()
+                res = predict_article(x, verbose=True)
+                res
+            except: 
+                pass
