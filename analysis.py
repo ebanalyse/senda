@@ -36,7 +36,7 @@ def predict_article(text, verbose = False):
 
     if verbose:
         preds_labels = [map_pred(pred) for pred in preds]
-        print("\n".join(["{}\n{}".format(sent,pred) for sent,pred in zip(sents,preds_labels)]))
+        print("\n\n".join(["{}\n{}".format(sent,pred) for sent,pred in zip(sents,preds_labels)]))
     
     #### MEAN SENTIMENT SCORE####
     # compute mean sentiment "score" across sentences.
@@ -107,7 +107,7 @@ def compute_statistics(section = "Sport", n=500, read_from_file=False):
         preds = pd.read_csv(f'{section}_analytical.csv')
     
     out = sns.histplot(data=preds, x="mean", kde = True, bins = 20)
-    out.set(title=f'Sektion: {section}',xlabel='Analytical(mean)', ylabel='Count')
+    out.set(title=f'Sektion: {section}',xlabel='Analytical(mean)', ylabel='Count',xlim=(0,1))
     out.get_figure().savefig(f'{section}_analytical.png')
     out.get_figure().clf()
 
@@ -130,7 +130,7 @@ def compute_statistics(section = "Sport", n=500, read_from_file=False):
     }
     return pd.DataFrame.from_dict(statistics)
 
-# out = compute_statistics("Alle", n = 10000)
+compute_statistics("Alle", n = 10000, read_from_file = True)
 
 sections = ["Erhverv",
             "Danske kendte",
@@ -146,7 +146,7 @@ sections = ["Erhverv",
                 "112",
                 "Teknologi"]
 
-all_stats = [compute_statistics(x, n = 500, read_from_file = False) for x in sections]
+all_stats = [compute_statistics(x, n = 500, read_from_file = True) for x in sections]
 
 stats_out = pd.concat(all_stats)
 
