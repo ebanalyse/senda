@@ -345,6 +345,8 @@ class Model:
 
 class ModelAnalytical(Model):
     # Model for Detecting 'Analytical' of Danish Texts
+    #
+    # Model is EXPERIMENTAL :)
     def __init__(self,
                  train_dataset = None,
                  eval_dataset = None,
