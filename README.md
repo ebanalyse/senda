@@ -135,6 +135,7 @@ The model can most certainly be improved, and we encourage all NLP-enthusiasts t
 
 ## Shout-outs
 - Thanks to [Alexandra Institute](https://alexandra.dk/) for doing all of the heavy lifting by annotating [Danish tweets]((https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#twitter-sentiment)) (and publishing them).
+- Thanks to BotXO, Jens Møllerhøj and Malte Højmark-Bertelsen for developing and publishing Danish BERT.
 
 ## Contact
 We hope, that you will find `senda` useful.
